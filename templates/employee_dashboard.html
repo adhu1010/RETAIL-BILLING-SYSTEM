@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/em_dash.css') }}">
+</head>
+<body>
+    <h1>Employee Dashboard</h1>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('employee.add_customer') }}">Add Customer</a></li>
+            <li><a href="{{ url_for('employee.purchase_product') }}">Purchase Product</a></li>
+        </ul>
+    </nav>
+
+    <h2>Welcome to the Employee Dashboard</h2>
+    <p>Select an option from the navigation above to get started.</p>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+/* static/css/home.css */
+
+/* Reset some basic styles */
+body, h1, a {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set a background color and font for the body */
+body {
+    background-color: #f4f4f4; /* Light grey background */
+    font-family: Arial, sans-serif; /* Change font */
+    color: #333; /* Darker text color */
+}
+
+/* Style the heading */
+h1 {
+    text-align: center; /* Center the heading */
+    margin-top: 50px; /* Add space above the heading */
+    font-size: 2.5em; /* Large font size */
+}
+
+/* Style the link */
+a {
+    display: block; /* Make link a block element */
+    text-align: center; /* Center the link */
+    margin: 20px auto; /* Space around the link */
+    padding: 10px 20px; /* Padding around the link */
+    text-decoration: none; /* Remove underline */
+    background-color: #007BFF; /* Bootstrap primary color */
+    color: white; /* White text color */
+    border-radius: 5px; /* Rounded corners */
+    width: 150px; /* Fixed width for button */
+}
+
+a:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

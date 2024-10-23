@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sales and Invoice Reports</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        form {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #333;
+        }
+
+        input[type="date"],
+        button {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        p {
+            color: #555;
+            text-align: center;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ddd;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sales and Invoice Reports</h1>
+
+    <!-- Sales Report Section -->
+    <h2>Sales Report ({{ start_date }} to {{ end_date }})</h2>
+
+    <form method="POST" action="{{ url_for('report.report') }}">
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" value="{{ start_date }}" required>
+    
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" value="{{ end_date }}" required>
+    
+        <button type="submit">Filter Sales Report</button>
+    
+        <!-- Buttons for common time periods -->
+        <button type="button" onclick="setDateRange('today')">Today</button>
+        <button type="button" onclick="setDateRange('week')">This Week</button>
+        <button type="button" onclick="setDateRange('month')">This Month</button>
+        <button type="button" onclick="setDateRange('year')">This Year</button>
+    </form>
+
+    {% if report_data %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Purchase Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in report_data %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No sales found for the selected date range.</p>
+    {% endif %}
+
+    <hr>
+
+    <!-- Invoice Report Section -->
+    <h2>Invoice Report ({{ start_date_invoice }} to {{ end_date_invoice }})</h2>
+
+    <form method="POST" action="{{ url_for('invoice_report.invoice_report') }}">
+        <label for="start_date_invoice">Start Date:</label>
+        <input type="date" id="start_date_invoice" name="start_date_invoice" value="{{ start_date_invoice }}" required>
+
+        <label for="end_date_invoice">End Date:</label>
+        <input type="date" id="end_date_invoice" name="end_date_invoice" value="{{ end_date_invoice }}" required>
+
+        <button type="submit">Filter Invoice Report</button>
+
+        <!-- Buttons for common time periods -->
+        <button type="button" onclick="setInvoiceDateRange('today')">Today</button>
+        <button type="button" onclick="setInvoiceDateRange('week')">This Week</button>
+        <button type="button" onclick="setInvoiceDateRange('month')">This Month</button>
+        <button type="button" onclick="setInvoiceDateRange('year')">This Year</button>
+    </form>
+
+    {% if invoice_report_data %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Invoice ID</th>
+                    <th>Customer Name</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Purchase Date</th>
+                    <th>Total Amount</th>
+                    <th>Invoice Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in invoice_report_data %}
+                    <tr>
+                        <td>{{ row[0] }}</td> <!-- Invoice ID -->
+                        <td>{{ row[3] }}</td> <!-- Customer Name -->
+                        <td>{{ row[4] }}</td> <!-- Product Name -->
+                        <td>{{ row[5] }}</td> <!-- Quantity -->
+                        <td>{{ row[6] }}</td> <!-- Purchase Date -->
+                        <td>${{ row[1] }}</td> <!-- Total Amount -->
+                        <td>{{ row[2] }}</td> <!-- Invoice Date -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No invoices found for the selected date range.</p>
+    {% endif %}
+
+    <script>
+        function setDateRange(period) {
+            const today = new Date();
+            let startDate, endDate;
+    
+            if (period === 'today') {
+                startDate = today.toISOString().split('T')[0];
+                endDate = startDate;
+            } else if (period === 'week') {
+                const firstDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+                startDate = firstDayOfWeek.toISOString().split('T')[0];
+                endDate = new Date().toISOString().split('T')[0];
+            } else if (period === 'month') {
+                const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                startDate = firstDayOfMonth.toISOString().split('T')[0];
+                endDate = new Date().toISOString().split('T')[0];
+            } else if (period === 'year') {
+                const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+                startDate = firstDayOfYear.toISOString().split('T')[0];
+                endDate = new Date().toISOString().split('T')[0];
+            }
+    
+            document.getElementById('start_date').value = startDate;
+            document.getElementById('end_date').value = endDate;
+        }
+
+        function setInvoiceDateRange(period) {
+            const today = new Date();
+            let startDate, endDate;
+
+            if (period === 'today') {
+                startDate = today.toISOString().split('T')[0];
+                endDate = startDate;
+            } else if (period === 'week') {
+                const firstDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+                startDate = firstDayOfWeek.toISOString().split('T')[0];
+                endDate = new Date().toISOString().split('T')[0];
+            } else if (period === 'month') {
+                const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                startDate = firstDayOfMonth.toISOString().split('T')[0];
+                endDate = new Date().toISOString().split('T')[0];
+            } else if (period === 'year') {
+                const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+                startDate = firstDayOfYear.toISOString().split('T')[0];
+                endDate = new Date().toISOString().split('T')[0];
+            }
+
+            document.getElementById('start_date_invoice').value = startDate;
+            document.getElementById('end_date_invoice').value = endDate;
+        }
+    </script>
+    
+</body>
+</html>

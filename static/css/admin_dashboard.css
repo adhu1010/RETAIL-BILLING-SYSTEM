@@ -1,0 +1,53 @@
+/* static/css/admin_dashboard.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Light gray background */
+    margin: 0; /* Remove default margin */
+}
+
+.dashboard-container {
+    max-width: 800px; /* Limit the width of the dashboard */
+    margin: 50px auto; /* Center the dashboard */
+    padding: 20px; /* Padding around the content */
+    background: white; /* White background for the dashboard */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+h1 {
+    text-align: center; /* Center the heading */
+    color: #333; /* Dark text for better readability */
+}
+
+nav {
+    margin-top: 20px; /* Space above the navigation */
+}
+
+ul {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+}
+
+li {
+    margin: 15px 0; /* Space between each link */
+}
+
+a {
+    text-decoration: none; /* Remove underline */
+    color: white; /* White text */
+    background-color: #007BFF; /* Blue background */
+    padding: 10px 15px; /* Padding inside the links */
+    border-radius: 5px; /* Rounded corners */
+    display: inline-block; /* Make link a block for padding */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+a:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+@media (max-width: 600px) {
+    .dashboard-container {
+        width: 90%; /* Responsive width on small screens */
+    }
+}

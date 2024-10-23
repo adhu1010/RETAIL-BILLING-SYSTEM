@@ -1,0 +1,63 @@
+/* static/css/add_product.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Light gray background */
+    margin: 0; /* Remove default margin */
+}
+
+.form-container {
+    max-width: 500px; /* Limit the width of the form */
+    margin: 50px auto; /* Center the form */
+    padding: 20px; /* Padding around the content */
+    background: white; /* White background for the form */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+h1 {
+    text-align: center; /* Center the heading */
+    color: #333; /* Dark text for better readability */
+}
+
+label {
+    display: block; /* Stack labels vertically */
+    margin: 10px 0 5px; /* Space around labels */
+    color: #555; /* Slightly lighter color for labels */
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%; /* Full width inputs */
+    padding: 10px; /* Padding inside inputs */
+    margin-bottom: 15px; /* Space below inputs */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding in width */
+    transition: border-color 0.3s; /* Smooth transition for focus effect */
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    border-color: #007BFF; /* Change border color on focus */
+}
+
+input[type="submit"] {
+    width: 100%; /* Full width submit button */
+    padding: 10px; /* Padding inside button */
+    background-color: #007BFF; /* Blue background */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+@media (max-width: 600px) {
+    .form-container {
+        width: 90%; /* Responsive width on small screens */
+    }
+}

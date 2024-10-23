@@ -1,0 +1,105 @@
+/* static/css/add_purchase_info.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Light gray background */
+    margin: 0;
+}
+
+.form-container {
+    max-width: 600px; /* Limit the width of the form */
+    margin: 50px auto; /* Center the form */
+    padding: 20px; /* Padding around the content */
+    background: white; /* White background for the form */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+h1, h3, h4 {
+    color: #333; /* Dark text for better readability */
+}
+
+h3 {
+    margin-top: 20px; /* Space above section headings */
+}
+
+.dropdown {
+    position: relative;
+    margin-bottom: 20px; /* Space below dropdowns */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    z-index: 1;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for dropdown */
+}
+
+.dropdown-content div {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+.dropdown-content div:hover {
+    background-color: #f1f1f1; /* Highlight on hover */
+}
+
+.show {
+    display: block; /* Show dropdown when active */
+}
+
+input[type="text"] {
+    width: 100%; /* Full width inputs */
+    padding: 10px; /* Padding inside inputs */
+    margin-bottom: 10px; /* Space below inputs */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+.invoice-info {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.selected-products {
+    margin-top: 20px;
+}
+
+.selected-products ul {
+    list-style-type: none; /* Remove bullets from list */
+    padding: 0; /* Remove default padding */
+}
+
+.selected-product {
+    display: flex;
+    justify-content: space-between;
+}
+
+#totalAmount {
+    font-weight: bold; /* Bold text for total amount */
+}
+
+.submit-button {
+    width: 100%; /* Full width button */
+    padding: 10px; /* Padding inside button */
+    background-color: #007BFF; /* Blue background */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.submit-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+@media (max-width: 600px) {
+    .form-container {
+        width: 90%; /* Responsive width on small screens */
+    }
+}

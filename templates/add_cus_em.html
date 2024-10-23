@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Customer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/em_add_cus.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Add Customer</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('employee.add_customer') }}">
+            <label for="customer_name">Name:</label>
+            <input type="text" name="customer_name" required><br>
+
+            <label for="customer_email">Email:</label>
+            <input type="email" name="customer_email" required><br>
+
+            <label for="customer_phone">Phone:</label>
+            <input type="text" name="customer_phone" required><br>
+
+            <input type="submit" value="Add Customer">
+        </form>
+    </div>
+</body>
+</html>

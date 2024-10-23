@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Purchase Info</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/purem.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Add Purchase Info</h1>
+
+        <h3>Select Customer:</h3>
+        <div class="dropdown">
+            <input type="text" id="customerSearch" placeholder="Search for customers..." onkeyup="filterCustomers()" required>
+            <div id="customerDropdown" class="dropdown-content">
+                {% for customer in customers %}
+                    <div class="customer-option" data-id="{{ customer[0] }}">{{ customer[1] }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        <input type="hidden" name="customer_id" id="customer_id">
+
+        <h3>Select Products:</h3>
+        <div class="dropdown">
+            <input type="text" id="productSearch" placeholder="Search for products..." onkeyup="filterProducts()" required>
+            <div id="productDropdown" class="dropdown-content">
+                {% for product in products %}
+                    <div class="product-option" data-id="{{ product[0] }}" data-price="{{ product[2] }}">{{ product[1] }} - ${{ product[2] }}</div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button type="button" onclick="addProductToList()">Add Product</button>
+
+        <div class="invoice-info">
+            <h4>Invoice Details:</h4>
+            <p id="invoiceCustomerName"></p>
+            <p id="invoiceCustomerID"></p>
+            <p id="invoiceID"></p>
+            <p id="invoiceDate"></p>
+        </div>
+
+        <div class="selected-products">
+            <h4>Selected Products:</h4>
+            <ul id="productList"></ul>
+            <div id="totalAmount">Total: $<span id="total">0.00</span></div>
+            <input type="hidden" id="total_amount" name="total_amount" value="0">
+        </div>
+
+        <!-- Form -->
+        <form method="POST" action="{{ url_for('employee.purchase_product') }}">
+            <input type="hidden" name="customer_id" id="form_customer_id">
+            <input type="hidden" name="total_amount" id="form_total_amount">
+            <div id="hiddenProductList"></div>
+            <input type="submit" value="Purchase">
+        </form>
+    </div>
+    <script>
+        let total = 0;
+
+        // Set invoice details (You can set these dynamically)
+        function setInvoiceDetails(customerId, customerName) {
+            const invoiceID = 'INV-' + Math.floor(Math.random() * 10000);  // Generate a random invoice ID
+            const invoiceDate = new Date().toLocaleDateString();  // Current date
+
+            document.getElementById('invoiceCustomerName').textContent = "Customer Name: " + customerName;
+            document.getElementById('invoiceCustomerID').textContent = "Customer ID: " + customerId;
+            document.getElementById('invoiceID').textContent = "Invoice ID: " + invoiceID;
+            document.getElementById('invoiceDate').textContent = "Date: " + invoiceDate;
+        }
+
+        // Filter customers based on input
+        function filterCustomers() {
+            const input = document.getElementById('customerSearch');
+            const filter = input.value.toLowerCase();
+            const dropdown = document.getElementById('customerDropdown');
+            const options = dropdown.getElementsByClassName('customer-option');
+
+            dropdown.classList.add('show');
+
+            for (let i = 0; i < options.length; i++) {
+                const txtValue = options[i].textContent || options[i].innerText;
+                options[i].style.display = txtValue.toLowerCase().indexOf(filter) > -1 ? "" : "none";
+            }
+        }
+
+        // Filter products based on input
+        function filterProducts() {
+            const input = document.getElementById('productSearch');
+            const filter = input.value.toLowerCase();
+            const dropdown = document.getElementById('productDropdown');
+            const options = dropdown.getElementsByClassName('product-option');
+
+            dropdown.classList.add('show');
+
+            for (let i = 0; i < options.length; i++) {
+                const txtValue = options[i].textContent || options[i].innerText;
+                options[i].style.display = txtValue.toLowerCase().indexOf(filter) > -1 ? "" : "none";
+            }
+        }
+
+        // Handle customer and product selection
+        document.addEventListener('click', function (e) {
+            // Customer selection
+            if (e.target.classList.contains('customer-option')) {
+                const customerId = e.target.dataset.id;
+                const customerName = e.target.textContent;
+                document.getElementById('customer_id').value = customerId;
+                document.getElementById('customerSearch').value = customerName;
+                document.getElementById('customerDropdown').classList.remove('show');
+
+                // Synchronize with form field
+                document.getElementById('form_customer_id').value = customerId;
+
+                // Set invoice details
+                setInvoiceDetails(customerId, customerName);
+            }
+
+            // Product selection
+            if (e.target.classList.contains('product-option')) {
+                document.getElementById('productSearch').value = e.target.textContent;
+                document.getElementById('productDropdown').classList.remove('show');
+            }
+        });
+
+        // Add product to the list
+        function addProductToList() {
+            const productSearch = document.getElementById('productSearch');
+            const selectedProduct = Array.from(document.getElementsByClassName('product-option'))
+                .find(option => option.textContent === productSearch.value);
+
+            if (selectedProduct) {
+                const productId = selectedProduct.dataset.id;
+                const productPrice = parseFloat(selectedProduct.dataset.price);
+                const quantity = parseInt(prompt("Enter quantity:"));
+
+                if (quantity > 0) {
+                    const calculatedPrice = productPrice * quantity;
+                    total += calculatedPrice;
+
+                    // Add to the visible list
+                    const productList = document.getElementById('productList');
+                    const li = document.createElement('li');
+                    li.className = 'selected-product';
+                    li.textContent = `Product ID: ${productId}, ${selectedProduct.textContent} x ${quantity} - $${calculatedPrice.toFixed(2)}`;
+                    productList.appendChild(li);
+
+                    // Update the total
+                    document.getElementById('total').textContent = total.toFixed(2);
+                    document.getElementById('total_amount').value = total.toFixed(2);
+                    document.getElementById('form_total_amount').value = total.toFixed(2);
+
+                    // Add a hidden input for this product
+                    const hiddenProductList = document.getElementById('hiddenProductList');
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'productList[]';
+                    input.value = `${productId},${quantity},${calculatedPrice.toFixed(2)}`;
+                    hiddenProductList.appendChild(input);
+                } else {
+                    alert("Please enter a valid quantity.");
+                }
+            } else {
+                alert("Please select a valid product.");
+            }
+
+            productSearch.value = ''; // Clear the search input
+        }
+
+        // Close dropdowns when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('#customerSearch')) {
+                document.getElementById('customerDropdown').classList.remove('show');
+            }
+            if (!event.target.matches('#productSearch')) {
+                document.getElementById('productDropdown').classList.remove('show');
+            }
+        }
+
+        // Form submission logic with validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const customerId = document.getElementById('form_customer_id').value;
+            const totalAmount = document.getElementById('form_total_amount').value;
+
+            if (!customerId) {
+                alert('Customer ID is not selected!');
+                e.preventDefault();  // Prevent submission
+            } else if (!totalAmount || parseFloat(totalAmount) <= 0) {
+                alert('Total amount is not valid!');
+                e.preventDefault();  // Prevent submission
+            }
+        });
+    </script>
+</body>
+</html>
