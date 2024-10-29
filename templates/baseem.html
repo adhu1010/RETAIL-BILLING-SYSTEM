@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/baseem.css') }}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('employee.employee_dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('employee.add_customer') }}">Purchase</a></li>
+            <li><a href="{{ url_for('employee.purchase_product') }}">Customers</a></li>
+            <li><a href="{{ url_for('auth.login') }}">Logout</a></li>
+        </ul>
+
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

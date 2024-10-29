@@ -1,8 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add Purchase Info</title>
+{% extends 'baseem.html' %}
+
+{% block title %}Purchase{% endblock %}
+
+{% block content %}
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/purem.css') }}">
 </head>
 <body>
@@ -192,4 +193,4 @@
         });
     </script>
 </body>
-</html>
+{% endblock %}

@@ -37,10 +37,11 @@ def add_product():
         if request.method == 'POST':
             name = request.form['name']
             price = request.form['price']
+            stock = request.form['stock']
 
             conn = db_connection.get_connection()
             cursor = conn.cursor()
-            cursor.execute('INSERT INTO products (name, price) VALUES (%s, %s)', (name, price))
+            cursor.execute('INSERT INTO products (name, price,stock) VALUES (%s, %s, %s)', (name, price,stock))
             conn.commit()
             conn.close()
 
@@ -50,3 +51,57 @@ def add_product():
         return render_template('add_product.html')
     else:
         return "Unauthorized access", 403
+
+
+@admin_bp.route('/search_products', methods=['GET','POST'])
+def search_products():
+    if 'role' in session and session['role'] == 'admin':
+        products=[]
+        
+        if request.method == 'POST':
+            query = request.form["query"]
+            print(query)
+            conn = db_connection.get_connection()
+            cursor = conn.cursor()
+            if query is None or query.strip() == '':
+            # Redirect to the customers page or handle the case where no query is provided
+                cursor.execute("SELECT * FROM products")
+                products = cursor.fetchall()    
+                cursor.close()
+                conn.close()
+                return render_template('displaypro.html', products=products)
+    
+            # Assuming product name is in the second column of the products table
+            cursor.execute("SELECT * FROM products WHERE name LIKE %s", ('%' + query + '%',))
+            products = cursor.fetchall()
+
+            cursor.close()
+            conn.close()
+        return render_template('displaypro.html', products=products)
+    else:
+        return "Unauthorized Access", 403
+
+@admin_bp.route('/search_customers', methods=['GET','POST'])
+def search_customers():
+    if 'role' in session and session['role'] == 'admin':
+        customers=[]
+        if request.method == 'POST':
+            query = request.form["query"]
+            print(query)
+            if query is None or query.strip() == '':
+             # Redirect to the customers page or handle the case where no query is provided
+                flash("Please enter a search term.", "error")
+                return redirect(url_for('admin.search_customers'))
+
+            conn = db_connection.get_connection()
+            cursor = conn.cursor()
+    
+            # Assuming product name is in the second column of the products table
+            cursor.execute("SELECT * FROM customers WHERE name LIKE %s" , ('%' + query + '%',))
+            customers = cursor.fetchall()
+            print(customers)
+            cursor.close()
+            conn.close()
+        return render_template('displaycus.html', customers=customers)
+    else:
+        return "Unauthorized Access", 403

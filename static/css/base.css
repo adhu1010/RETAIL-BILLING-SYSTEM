@@ -1,0 +1,35 @@
+/* static/styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    background-color: #333; /* Background color for the nav bar */
+}
+
+nav ul {
+    list-style-type: none; /* Remove default list styling */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    overflow: hidden; /* Clear floats */
+    display: flex; /* Use flexbox for horizontal layout */
+}
+
+nav li {
+    flex: 1; /* Make each list item take up equal space */
+}
+
+nav a {
+    display: block; /* Make links block elements */
+    color: white; /* Link color */
+    text-align: center; /* Center the text */
+    padding: 14px; /* Space around the link */
+    text-decoration: none; /* Remove underline */
+}
+
+nav a:hover {
+    background-color: #111; /* Darker background on hover */
+}

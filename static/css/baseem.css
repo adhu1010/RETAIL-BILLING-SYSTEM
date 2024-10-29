@@ -1,0 +1,44 @@
+/* base.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Light grey background */
+}
+
+nav {
+    background-color: #333; /* Dark background for the navbar */
+    color: #fff; /* White text */
+}
+
+nav ul {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    display: flex; /* Display list items in a row */
+}
+
+nav ul li {
+    flex: 1; /* Evenly distribute list items */
+}
+
+nav ul li a {
+    display: block; /* Make the entire area clickable */
+    color: white; /* White text color */
+    text-decoration: none; /* Remove underline */
+    padding: 15px; /* Space around text */
+    text-align: center; /* Center text */
+}
+
+nav ul li a:hover {
+    background-color: #575757; /* Darker background on hover */
+}
+
+div {
+    padding: 20px; /* Space inside the content area */
+    background-color: white; /* White background for content */
+    margin: 20px; /* Space outside the content area */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}

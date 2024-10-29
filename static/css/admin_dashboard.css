@@ -1,53 +1,62 @@
-/* static/css/admin_dashboard.css */
+/* admin_dashboard.css */
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4; /* Light gray background */
-    margin: 0; /* Remove default margin */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Light background */
 }
 
 .dashboard-container {
-    max-width: 800px; /* Limit the width of the dashboard */
-    margin: 50px auto; /* Center the dashboard */
-    padding: 20px; /* Padding around the content */
-    background: white; /* White background for the dashboard */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    background-color: #333; /* Dark background for the header */
+    color: #fff; /* White text color */
+    padding: 20px; /* Padding inside the header */
 }
 
 h1 {
-    text-align: center; /* Center the heading */
-    color: #333; /* Dark text for better readability */
+    margin: 0; /* Remove default margin */
 }
 
 nav {
-    margin-top: 20px; /* Space above the navigation */
+    margin-top: 20px; /* Space between the header and navigation */
 }
 
-ul {
-    list-style-type: none; /* Remove bullets */
+nav ul {
+    list-style-type: none; /* Remove bullets from the list */
     padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    display: flex; /* Use flexbox for horizontal layout */
+    flex-wrap: wrap; /* Allow items to wrap onto the next line */
 }
 
-li {
-    margin: 15px 0; /* Space between each link */
+nav ul li {
+    flex: 1; /* Each item takes equal space */
+    text-align: center; /* Center the text in each list item */
+    margin: 5px; /* Space between items */
 }
 
-a {
+nav ul li a {
+    display: block; /* Make the entire area clickable */
+    color: white; /* White text color */
     text-decoration: none; /* Remove underline */
-    color: white; /* White text */
-    background-color: #007BFF; /* Blue background */
-    padding: 10px 15px; /* Padding inside the links */
+    padding: 15px; /* Space around text */
+    background-color: #444; /* Background color for links */
     border-radius: 5px; /* Rounded corners */
-    display: inline-block; /* Make link a block for padding */
     transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
-a:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+nav ul li a:hover {
+    background-color: #575757; /* Darker background on hover */
 }
 
-@media (max-width: 600px) {
-    .dashboard-container {
-        width: 90%; /* Responsive width on small screens */
-    }
+h2 {
+    margin-top: 20px; /* Space above the h2 */
+    text-align: center; /* Center the h2 text */
+    color: #333; /* Dark color for the subtitle */
+}
+
+p {
+    text-align: center; /* Center paragraph text */
+    color: #666; /* Grey color for paragraph text */
+    margin-top: 10px; /* Space above the paragraph */
 }

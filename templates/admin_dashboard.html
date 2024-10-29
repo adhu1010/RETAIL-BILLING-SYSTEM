@@ -14,10 +14,16 @@
             <ul>
                 <li><a href="{{ url_for('admin.add_customer') }}">Add Customer</a></li>
                 <li><a href="{{ url_for('admin.add_product') }}">Add Product</a></li>
+                <li><a href="{{ url_for('admin.search_customers') }}">Customer Details</a></li>
+                <li><a href="{{ url_for('admin.search_products') }}">Product Details</a></li>
                 <li><a href="{{ url_for('purchase.purchase_items') }}">Add Purchase Info</a></li>
                 <li><a href="{{ url_for('report.report') }}">View Report</a></li>
+                <li><a href="{{ url_for('auth.login') }}">Logout</a></li>
+
             </ul>
         </nav>
     </div>
+    <h2>Welcome to the Employee Dashboard</h2>
+    <p>Select an option from the navigation above to get started.</p>
 </body>
 </html>

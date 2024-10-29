@@ -1,8 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sales and Invoice Reports</title>
+{% extends 'base.html' %}
+
+{% block title %}Sales and Invoice Reports{% endblock %}
+
+{% block content %}
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         body {
@@ -245,4 +246,4 @@
     </script>
     
 </body>
-</html>
+{% endblock %}

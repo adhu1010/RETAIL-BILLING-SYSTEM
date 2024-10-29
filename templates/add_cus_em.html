@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add Customer</title>
+{% extends 'baseem.html' %}
+
+{% block title %}Add Customer{% endblock %}
+
+{% block content %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/em_add_cus.css') }}">
 </head>
 <body>
@@ -33,4 +33,4 @@
         </form>
     </div>
 </body>
-</html>
+{% endblock %}
