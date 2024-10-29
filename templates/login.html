@@ -8,6 +8,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
+    <div class="error-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+    <div>
     <div class="login-container">
         <h1>Login</h1>
         <form action="{{ url_for('auth.login') }}" method="POST">

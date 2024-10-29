@@ -52,7 +52,28 @@ def add_product():
     else:
         return "Unauthorized access", 403
 
+@admin_bp.route('/add_user', methods=['GET', 'POST'])
+def add_user():
+    if 'role' in session and session['role'] == 'admin':
+        if request.method == 'POST':
+            id=request.form['id']
+            name = request.form['name']
+            email = request.form['email']
+            password = request.form['password']
+            role = request.form['role']
 
+            conn = db_connection.get_connection()
+            cursor = conn.cursor()
+            cursor.execute('INSERT INTO users (id ,username, email, password, role) VALUES (%s, %s, %s, %s, %s)', (id, name, email, password, role))
+            conn.commit()
+            conn.close()
+
+            flash("Customer added successfully!")
+            return redirect(url_for('admin.add_user'))
+
+        return render_template('add_user.html')
+    else:
+        return "Unauthorized access", 403
 @admin_bp.route('/search_products', methods=['GET','POST'])
 def search_products():
     if 'role' in session and session['role'] == 'admin':

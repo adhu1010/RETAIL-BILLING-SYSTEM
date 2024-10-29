@@ -1,6 +1,7 @@
 # In modules/auth.py
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 import utils.db_connection as db_connection
+import time as t
 
 auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/')
@@ -19,9 +20,11 @@ def login():
             session['role'] = user['role']
             if user['role'] == 'admin':
                 return redirect(url_for('admin.admin_dashboard'))
-            return redirect(url_for('employee.employee_dashboard'))
+            elif user['role']== 'employee':
+                return redirect(url_for('employee.employee_dashboard'))
         else:
-            return "Invalid username or password"
+            flash("Invalid Username or Password ","error")
+            return redirect(url_for('auth.login'))
 
     # Render the login page for GET requests
     return render_template('login.html')

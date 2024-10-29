@@ -1,12 +1,26 @@
-/* static/css/login.css */
+
 body {
-    background-color: #f0f4f8; /* Light background for a clean look */
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height */
-    margin: 0;
+    height: 100vh; /* Center vertically */
+}
+
+form {
+    display: flex;
+    flex-direction: column; /* Stack the elements vertically */
+    width: 300px; /* Adjust width as needed */
+}
+
+.error-container {
+    margin-top: auto; /* Push the error message to the bottom */
+    margin-top: 20px; /* Add some space above the error message */
+}
+
+.error-messages {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
 }
 
 .login-container {
@@ -18,6 +32,10 @@ body {
     text-align: center;
 }
 
+.error{
+    color: red;
+    font-weight: bold;
+}
 h1 {
     margin-bottom: 20px; /* Space below the heading */
     color: #333; /* Darker text for better readability */
